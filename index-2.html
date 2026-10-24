@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b090a">
+  <title>How Evil Women Manipulate Innocent Men</title>
+  <style>
+    :root {
+      --bg: #0b090a;
+      --panel: #171113;
+      --panel-hover: #211519;
+      --red: #a92835;
+      --red-deep: #5b1820;
+      --border: #492027;
+      --text: #f0e8e8;
+      --muted: #b7aaac;
+      --dim: #70575b;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; background: var(--bg); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(91, 24, 32, .15), transparent 55%),
+        var(--bg);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      line-height: 1.6;
+    }
+    button, a { font: inherit; }
+    button { color: inherit; }
+    .topbar {
+      position: fixed;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 15px clamp(16px, 4vw, 44px);
+      background: rgba(11, 9, 10, .88);
+      border-bottom: 1px solid rgba(91, 24, 32, .7);
+      backdrop-filter: blur(12px);
+    }
+    .brand {
+      color: var(--red);
+      font-size: .75rem;
+      letter-spacing: .14em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .player {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .track-label {
+      color: var(--muted);
+      font-size: .68rem;
+      letter-spacing: .08em;
+      white-space: nowrap;
+    }
+    .play-button {
+      width: 35px;
+      height: 35px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--red-deep);
+      border-radius: 50%;
+      color: var(--red);
+      background: var(--panel);
+      cursor: pointer;
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+    .play-button:hover { background: var(--panel-hover); border-color: var(--red); transform: scale(1.05); }
+    .volume-note { color: var(--dim); font-size: .65rem; }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 125px 0 48px;
+    }
+    .frame {
+      position: relative;
+      border: 1px solid var(--red-deep);
+      background: rgba(15, 11, 13, .82);
+      box-shadow: 0 0 0 5px rgba(91, 24, 32, .045), 0 20px 80px rgba(0,0,0,.25);
+      padding: clamp(22px, 5vw, 54px);
+      min-height: 55vh;
+    }
+    .frame::before, .frame::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-color: var(--red);
+      opacity: .85;
+      pointer-events: none;
+    }
+    .frame::before { top: -1px; left: -1px; border-top: 2px solid; border-left: 2px solid; }
+    .frame::after { bottom: -1px; right: -1px; border-bottom: 2px solid; border-right: 2px solid; }
+    .eyebrow {
+      color: var(--red);
+      font-size: .72rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      text-align: center;
+      margin: 0 0 18px;
+    }
+    h1 {
+      max-width: 760px;
+      margin: 0 auto;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 6vw, 4.7rem);
+      font-weight: 500;
+      letter-spacing: -.045em;
+      line-height: 1.06;
+      text-align: center;
+      text-wrap: balance;
+      animation: hop-in .85s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .subtitle {
+      max-width: 620px;
+      margin: 25px auto 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: clamp(.85rem, 2vw, 1rem);
+      animation: hop-in .85s .16s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .stamp {
+      display: flex;
+      justify-content: center;
+      margin: 28px 0 0;
+      animation: hop-in .85s .3s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .stamp span {
+      border: 1px solid var(--border);
+      padding: 7px 12px;
+      color: #c37a82;
+      font-size: .67rem;
+      letter-spacing: .11em;
+      text-align: center;
+    }
+    .rule { height: 1px; background: linear-gradient(90deg, transparent, var(--red-deep), transparent); margin: 38px 0 28px; }
+    .section-heading {
+      margin: 0 0 16px;
+      color: var(--red);
+      font-size: .78rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .nav-list { display: grid; gap: 12px; }
+    .nav-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      padding: 17px 18px;
+      text-align: left;
+      border: 1px solid var(--border);
+      background: linear-gradient(100deg, rgba(23,17,19,.96), rgba(17,13,14,.96));
+      cursor: pointer;
+      transition: border-color .2s, background .2s, transform .2s;
+    }
+    .nav-card:hover, .nav-card:focus-visible {
+      border-color: var(--red);
+      background: var(--panel-hover);
+      transform: translateX(3px);
+      outline: none;
+    }
+    .nav-number { color: var(--red); font-size: .8rem; flex: 0 0 auto; }
+    .nav-title { flex: 1; font-size: .83rem; font-weight: 700; letter-spacing: .025em; }
+    .arrow { color: var(--red); font-size: 1.1rem; }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 24px;
+      color: var(--dim);
+      font-size: .65rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .page-view { animation: page-in .3s ease both; }
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 30px;
+      padding: 8px 12px;
+      color: var(--red);
+      border: 1px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .back-button:hover { border-color: var(--red); background: var(--panel); }
+    .page-kicker { color: var(--red); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; }
+    h2 {
+      margin: 10px 0 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 4vw, 3.1rem);
+      line-height: 1.1;
+      font-weight: 500;
+      letter-spacing: -.03em;
+    }
+    .page-description { max-width: 620px; color: var(--muted); }
+    .placeholder {
+      margin-top: 30px;
+      padding: 22px;
+      min-height: 160px;
+      border: 1px dashed var(--border);
+      color: var(--dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: .8rem;
+    }
+    .smallprint { margin-top: 25px; color: var(--dim); font-size: .68rem; }
+    .entry-gate {
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 24px;
+      background: #080708;
+      isolation: isolate;
+    }
+    .entry-gate::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: -2%;
+      background: linear-gradient(rgba(5,4,5,.86), rgba(5,4,5,.91)), url("hidden.png") center / cover no-repeat;
+      opacity: .42;
+      filter: brightness(.25) saturate(.55) contrast(1.25);
+      transform: scale(1.02);
+      pointer-events: none;
+    }
+    .entry-panel { width: min(560px, 100%); text-align: center; padding: clamp(25px, 6vw, 54px) 22px; border: 1px solid rgba(91,24,32,.45); background: rgba(8,6,7,.48); box-shadow: 0 20px 90px rgba(0,0,0,.25); }
+    .entry-code { color: #79535a; font-size: .65rem; letter-spacing: .2em; margin-bottom: 30px; }
+    .entry-title { font: 500 clamp(2.7rem, 9vw, 5rem)/.98 Georgia, "Times New Roman", serif; letter-spacing: -.05em; margin: 0; color: #d4cacc; }
+    .entry-copy { color: #827478; font-size: .82rem; margin: 24px auto 12px; max-width: 340px; }
+    .entry-warning { color: #6d2731; font-size: .64rem; letter-spacing: .16em; margin: 0 0 34px; }
+    .entry-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .entry-choice { min-height: 54px; border: 1px solid #492027; background: rgba(19,13,15,.78); color: #c8b9bc; cursor: pointer; letter-spacing: .12em; font-size: .75rem; transition: .2s ease; }
+    .entry-choice:hover, .entry-choice:focus-visible { border-color: #a92835; background: rgba(91,24,32,.25); outline: none; }
+    .entry-choice.no { color: #756b6e; border-color: #292326; }
+    .entry-foot { color: #514348; font-size: .59rem; letter-spacing: .1em; margin-top: 26px; }
+    body.locked { overflow: hidden; }
+    body.locked .topbar, body.locked main { visibility: hidden; }
+    .manipulators { margin-top: 42px; }
+    .manipulator-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .manipulator-slot { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(91,24,32,.14), rgba(10,8,9,.92)); }
+    .manipulator-slot img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(.72) contrast(1.08); }
+    .slot-label { position: absolute; left: 0; right: 0; bottom: 0; padding: 9px 11px; background: linear-gradient(transparent, rgba(5,4,5,.92)); color: #927c80; font-size: .62rem; letter-spacing: .12em; }
+    .denied { color: #8e333d; font: 500 clamp(2rem, 7vw, 4rem)/1 Georgia, serif; letter-spacing: .08em; }
+    .denied-copy { color: #716469; font-size: .75rem; margin-top: 18px; }
+    @media (max-width: 420px) { .manipulator-grid { gap: 9px; } .slot-label { font-size: .55rem; padding: 7px; } }
+    @keyframes hop-in {
+      0% { opacity: 0; transform: translateY(-34px) scale(.98); }
+      65% { opacity: 1; transform: translateY(5px) scale(1.005); }
+      82% { transform: translateY(-2px); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes page-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 520px) {
+      .topbar { padding: 12px 14px; }
+      .brand { font-size: .62rem; letter-spacing: .08em; }
+      .track-label { font-size: .58rem; }
+      .volume-note { display: none; }
+      main { padding-top: 100px; }
+      .frame { padding: 24px 18px; }
+      .nav-card { padding: 15px 12px; gap: 11px; }
+      .nav-title { font-size: .75rem; }
+      .footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body class="locked">
+  <section class="entry-gate" id="entry-gate" aria-label="Entry confirmation">
+    <div class="entry-panel" id="entry-panel">
+      <div class="entry-code">RESTRICTED ACCESS // 001</div>
+      <h1 class="entry-title">ARE YOU SURE?</h1>
+      <p class="entry-copy">You are about to witness something you cannot unsee.</p>
+      <p class="entry-warning">PROCEED AT YOUR OWN RISK</p>
+      <div class="entry-actions">
+        <button class="entry-choice" id="enter-yes" type="button">YES — ENTER</button>
+        <button class="entry-choice no" id="enter-no" type="button">NO — ABORT</button>
+      </div>
+      <div class="entry-foot">AUDIO TRANSMISSION WILL BEGIN UPON ENTRY</div>
+    </div>
+  </section>
+  <header class="topbar">
+    <div class="brand">[ Classified Archives ]</div>
+    <div class="player" aria-label="Music player">
+      <div>
+        <div class="track-label">MISSION AUDIO // M1</div>
+        <div class="volume-note" id="player-status">PRESS PLAY TO BEGIN</div>
+      </div>
+      <button class="play-button" id="play-toggle" type="button" aria-label="Play music" title="Play / pause music">▶</button>
+    </div>
+  </header>
+
+  <!-- Put your audio file named M1.mp3 beside this index.html file. -->
+  <audio id="background-music" src="M1.mp3" loop preload="auto"></audio>
+  <!-- Put the 3-second proof-page sound effect named proof-open.mp3 beside this file. -->
+  <audio id="proof-page-sfx" src="proof-open.mp3" preload="auto"></audio>
+
+  <main>
+    <div class="frame">
+      <div id="app">
+        <section class="page-view" aria-labelledby="main-title">
+          <p class="eyebrow">The truth they don't want you to know</p>
+          <h1 id="main-title">How Evil Women Manipulate Innocent Men</h1>
+          <p class="subtitle">An entirely serious investigation into allegations of deeply questionable credibility.</p>
+          <div class="stamp"><span>⚠ UNVERIFIED INTELLIGENCE // HANDLE WITH SUSPICION ⚠</span></div>
+
+          <div class="rule"></div>
+          <h2 class="section-heading">Select your investigation</h2>
+          <nav class="nav-list" aria-label="Investigation pages">
+            <button class="nav-card" type="button" data-page="proofs">
+              <span class="nav-number">01</span>
+              <span class="nav-title">Proofs</span>
+              <span class="arrow" aria-hidden="true">↗</span>
+            </button>
+            <button class="nav-card" type="button" data-page="defense">
+              <span class="nav-number">02</span>
+              <span class="nav-title">How To Not Get Manipulated By Women</span>
+              <span class="arrow" aria-hidden="true">↗</span>
+            </button>
+            <button class="nav-card" type="button" data-page="countermeasures">
+              <span class="nav-number">03</span>
+              <span class="nav-title">How To Manipulate Women Yourself</span>
+              <span class="arrow" aria-hidden="true">↗</span>
+            </button>
+          </nav>
+          <section class="manipulators" aria-labelledby="top-manipulators-title">
+            <div class="rule"></div>
+            <h2 class="section-heading" id="top-manipulators-title">TOP MANIPULATORS</h2>
+            <div class="manipulator-grid">
+              <div class="manipulator-slot"><img src="manipulator1.jpg" alt="" onerror="this.style.display='none'"><span class="slot-label">FILE 001 // CLASSIFIED</span></div>
+              <div class="manipulator-slot"><img src="manipulator2.jpg" alt="" onerror="this.style.display='none'"><span class="slot-label">FILE 002 // CLASSIFIED</span></div>
+              <div class="manipulator-slot"><img src="manipulator3.jpg" alt="" onerror="this.style.display='none'"><span class="slot-label">FILE 003 // CLASSIFIED</span></div>
+              <div class="manipulator-slot"><img src="manipulator4.jpg" alt="" onerror="this.style.display='none'"><span class="slot-label">FILE 004 // CLASSIFIED</span></div>
+            </div>
+          </section>
+          <div class="footer">
+            <span>Confidential · Eyes Only</span>
+            <span>All claims pending review</span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const app = document.getElementById('app');
+    const audio = document.getElementById('background-music');
+    const proofPageSfx = document.getElementById('proof-page-sfx');
+    const playToggle = document.getElementById('play-toggle');
+    const playerStatus = document.getElementById('player-status');
+    const entryGate = document.getElementById('entry-gate');
+    const entryPanel = document.getElementById('entry-panel');
+
+    document.getElementById('enter-yes').addEventListener('click', async () => {
+      entryGate.remove();
+      document.body.classList.remove('locked');
+      try {
+        await audio.play();
+        updatePlayer();
+      } catch (error) {
+        playerStatus.textContent = 'TAP PLAY IF AUDIO DOES NOT START';
+      }
+    });
+
+    document.getElementById('enter-no').addEventListener('click', () => {
+      entryPanel.innerHTML = '<div class="entry-code">CONNECTION TERMINATED // 000</div><h1 class="denied">ACCESS DENIED</h1><p class="denied-copy">Good call. This file was probably nonsense anyway.</p>';
+    });
+
+    const pages = {
+      proofs: {
+        number: 'DOSSIER 01',
+        title: 'Proofs',
+        description: 'A collection of extremely suspicious evidence, conveniently arranged to support a conclusion reached before the investigation began.',
+        placeholder: '[ YOUR “EVIDENCE” GOES HERE ]'
+      },
+      defense: {
+        number: 'DOSSIER 02',
+        title: 'How To Not Get Manipulated By Women',
+        description: 'A field guide to boundaries, clear communication, and not treating every delayed text like a national emergency.',
+        placeholder: '[ YOUR CONTENT GOES HERE ]'
+      },
+      countermeasures: {
+        number: 'DOSSIER 03',
+        title: 'How To Manipulate Women Yourself',
+        description: 'Counterintelligence division: the real power move is mutual respect, honest communication, and refusing to become the villain in your own report.',
+        placeholder: '[ YOUR SATIRICAL CONTENT GOES HERE ]'
+      }
+    };
+
+    function renderPage() {
+      const key = window.location.hash.replace(/^#\/?/, '');
+      if (!key || !pages[key]) {
+        app.innerHTML = `
+          <section class="page-view" aria-labelledby="main-title">
+            <p class="eyebrow">The truth they don't want you to know</p>
+            <h1 id="main-title">How Evil Women Manipulate Innocent Men</h1>
+            <p class="subtitle">An entirely serious investigation into allegations of deeply questionable credibility.</p>
+            <div class="stamp"><span>⚠ UNVERIFIED INTELLIGENCE // HANDLE WITH SUSPICION ⚠</span></div>
+            <div class="rule"></div>
+            <h2 class="section-heading">Select your investigation</h2>
+            <nav class="nav-list" aria-label="Investigation pages">
+              <button class="nav-card" type="button" data-page="proofs"><span class="nav-number">01</span><span class="nav-title">Proofs</span><span class="arrow" aria-hidden="true">↗</span></button>
+              <button class="nav-card" type="button" data-page="defense"><span class="nav-number">02</span><span class="nav-title">How To Not Get Manipulated By Women</span><span class="arrow" aria-hidden="true">↗</span></button>
+              <button class="nav-card" type="button" data-page="countermeasures"><span class="nav-number">03</span><span class="nav-title">How To Manipulate Women Yourself</span><span class="arrow" aria-hidden="true">↗</span></button>
+            </nav>
+            <section class="manipulators" aria-labelledby="top-manipulators-title">
+              <div class="rule"></div><h2 class="section-heading" id="top-manipulators-title">TOP MANIPULATORS</h2>
+              <div class="manipulator-grid">
+                <div class="manipulator-slot"><img src="manipulator1.jpg" alt="" onerror="this.style.display='none'"><span class="slot-label">FILE 001 // CLASSIFIED</span></div>
+                <div class="manipulator-slot"><img src="manipulator2.jpg" alt="" onerror="this.style.display='none'"><span class="slot-label">FILE 002 // CLASSIFIED</span></div>
+                <div class="manipulator-slot"><img src="manipulator3.jpg" alt="" onerror="this.style.display='none'"><span class="slot-label">FILE 003 // CLASSIFIED</span></div>
+                <div class="manipulator-slot"><img src="manipulator4.jpg" alt="" onerror="this.style.display='none'"><span class="slot-label">FILE 004 // CLASSIFIED</span></div>
+              </div>
+            </section>
+            <div class="footer"><span>Confidential · Eyes Only</span><span>All claims pending review</span></div>
+          </section>`;
+        return;
+      }
+
+      const page = pages[key];
+      app.innerHTML = `
+        <section class="page-view" aria-labelledby="page-title">
+          <button class="back-button" type="button" data-page="home">← Return to main file</button>
+          <div class="page-kicker">${page.number} // RESTRICTED ACCESS</div>
+          <h2 id="page-title">${page.title}</h2>
+          <p class="page-description">${page.description}</p>
+          <div class="rule"></div>
+          <div class="placeholder">${page.placeholder}</div>
+          <p class="smallprint">NOTICE: This archive is satire. Please apply more critical thinking here than the fictional investigators do.</p>
+        </section>`;
+    }
+
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-page]');
+      if (!button) return;
+      const page = button.dataset.page;
+      if (page === 'home') {
+        history.pushState(null, '', window.location.pathname + window.location.search);
+      } else {
+        history.pushState(null, '', '#' + page);
+      }
+      renderPage();
+      if (page === 'proofs') {
+        // Restart only the short effect; the background music keeps playing untouched.
+        proofPageSfx.currentTime = 0;
+        proofPageSfx.play().catch(() => {});
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('popstate', renderPage);
+    window.addEventListener('hashchange', renderPage);
+
+    playToggle.addEventListener('click', async () => {
+      if (audio.paused) {
+        try {
+          await audio.play();
+        } catch (error) {
+          playerStatus.textContent = 'CHECK THAT M1.MP3 IS IN THE SAME FOLDER';
+        }
+      } else {
+        audio.pause();
+      }
+      updatePlayer();
+    });
+
+    function updatePlayer() {
+      const playing = !audio.paused;
+      playToggle.textContent = playing ? 'Ⅱ' : '▶';
+      playToggle.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
+      playerStatus.textContent = playing ? 'OPERATION IN PROGRESS' : 'PRESS PLAY TO BEGIN';
+    }
+    audio.addEventListener('play', updatePlayer);
+    audio.addEventListener('pause', updatePlayer);
+    audio.addEventListener('error', () => {
+      playerStatus.textContent = 'ADD M1.MP3 BESIDE INDEX.HTML';
+    });
+
+    renderPage();
+  </script>
+</body>
+</html>
